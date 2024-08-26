@@ -27,6 +27,7 @@ class authController {
     async login(req, res) {
         try {
             const {username, password} = req.body
+            console.log(username, await Users.find())
             const user = await Users.find({username})
             if (user.length == 0) {
                 return res.json({message: "User with this login not found"})
@@ -35,7 +36,6 @@ class authController {
             if (!validPassword) {
                 return res.json({message: "Incorrect password"})
             }
-            // res.cookie("id",user[0]._id.toString(),{maxAge: 100000000})
             res.send({message: 'Success',id: user[0]._id, name: user[0].name})
             
         } catch (error) {

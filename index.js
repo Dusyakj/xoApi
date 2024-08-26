@@ -32,7 +32,7 @@ app.use('/game', gameRputer)
 
 const start = () => {
     try {
-        mongoose.connect('mongodb://127.0.0.1:27017/xo-app');
+        mongoose.connect('mongodb+srv://dusyakj:0nyOc5fVlEwjerqa@xo-app.9e6tw.mongodb.net/?retryWrites=true&w=majority&appName=xo-app');
         app.listen(PORT, () => console.log(`server started on port ${PORT}`));
     } catch (error) {
         console.log(error)
