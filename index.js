@@ -112,16 +112,24 @@ app.ws('/game', (ws, req) => {
                     const game = gamess[0]
                     array = game.game
                     item = game.item
+                    if (array[msg.field-1][msg.pole] != '-'){
+                        console.log('off')
+                        break
+                    }
                     array[msg.field-1][msg.pole] = item
                     toWinField(msg.field - 1, array, item)
+                    let win = toWin(array,item)
+                    console.log(win)
+                    // console.log(array)
                     
                     if (item == 'X'){
                         item = 'O'
                     }else {
                         item = 'X'
                     }
+                    let now
                     if (array[msg.pole-1][0] != '-'){
-                        let now  = 0
+                        now  = 0
                     }else {
                         now = msg.pole
                     }
@@ -159,7 +167,6 @@ const broadcastConnection1 =  async (ws, msg,game) => {
 const combinations = ['123', '159', '147', '258', '369', '357', '456', '789']
 const toWinField = (field,l,now) => {
     fieldList = l[field]
-    console.log(fieldList)
     combinations.forEach((comb, i, arr)=>{
         if (fieldList[comb[0]] == now && fieldList[comb[1]] == now && fieldList[comb[2]] == now){
             fieldList[0] = now
@@ -170,18 +177,19 @@ const toWinField = (field,l,now) => {
 
 }
 
-const toWin = () => {
-    flag = 0
+const toWin = (l,now) => {
+    let flag = 0
     combinations.forEach((comb, i, arr)=>{
-        if (l[comb[0]][0] == now && l[comb[1]][0] == now && l[comb[2]][0] == now){
+        if (l[comb[0] - 1][0] == now && l[comb[1] - 1][0] == now && l[comb[2] - 1][0] == now){
             flag = 1
         }
 
     })
-    if (flag){
+    if (flag) {
         return 1
-    }else {
+    } else{ 
         return 0
     }
+    
     
 }
